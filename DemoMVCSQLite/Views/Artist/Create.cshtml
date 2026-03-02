@@ -1,0 +1,32 @@
+@model DemoMVCSQLite.Models.Artist
+
+@{
+    ViewData["Title"] = "Ajouter un artiste";
+}
+
+<h1>🎧 Ajouter un artiste</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Nom" class="form-label"></label>
+        <input asp-for="Nom" class="form-control" />
+        <span asp-validation-for="Nom" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Style" class="form-label"></label>
+        <input asp-for="Style" class="form-control" placeholder="Techno, House, R&B..." />
+        <span asp-validation-for="Style" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Biographie" class="form-label"></label>
+        <textarea asp-for="Biographie" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Biographie" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>

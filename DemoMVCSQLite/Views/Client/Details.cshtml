@@ -1,0 +1,68 @@
+@model DemoMVCSQLite.Models.Client
+
+@{
+    ViewData["Title"] = "Détails client";
+}
+
+<h1>👥 @Model.Prenom @Model.Nom</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Téléphone</dt>
+    <dd class="col-sm-9">@Model.Telephone</dd>
+
+    <dt class="col-sm-3">Date de naissance</dt>
+    <dd class="col-sm-9">@Model.DateNaissance.ToShortDateString()</dd>
+</dl>
+
+<h3>🎟️ Réservations billets</h3>
+@if (Model.Reservations.Any())
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Soirée</th>
+                <th>Type billet</th>
+                <th>Quantité</th>
+                <th>Montant</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model.Reservations)
+            {
+                <tr>
+                    <td>@r.Ticket.Event.Titre</td>
+                    <td>@r.Ticket.Type</td>
+                    <td>@r.QteTickets</td>
+                    <td>@r.MontantTotal €</td>
+                    <td>@r.Statut</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Aucune réservation de billet.</p>
+}
+
+<h3>🪑 Réservations tables VIP</h3>
+@if (Model.ReservationsTables.Any())
+{
+    <ul>
+        @foreach (var rt in Model.ReservationsTables)
+        {
+            <li>@rt.Event.Titre — @rt.Event.Date.ToShortDateString() — @rt.Statut</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Aucune réservation de table VIP.</p>
+}
+
+<a asp-action="Edit" asp-route-id="@Model.ClientId" class="btn btn-warning">Modifier</a>
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

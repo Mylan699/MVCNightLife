@@ -15,7 +15,6 @@ namespace DemoMVCSQLite.Controllers
             _context = context;
         }
 
-        // Liste de toutes les soirées
         public async Task<IActionResult> Index()
         {
             var events = await _context.Events
@@ -24,7 +23,6 @@ namespace DemoMVCSQLite.Controllers
             return View(events);
         }
 
-        // Détail d'une soirée
         public async Task<IActionResult> Details(int id)
         {
             var ev = await _context.Events
@@ -32,20 +30,20 @@ namespace DemoMVCSQLite.Controllers
                 .Include(e => e.EventArtists)
                     .ThenInclude(ea => ea.Artist)
                 .Include(e => e.Tickets)
+                    .ThenInclude(t => t.Reservations)
+                        .ThenInclude(r => r.Client)
                 .FirstOrDefaultAsync(e => e.EventId == id);
 
             if (ev == null) return NotFound();
             return View(ev);
         }
 
-        // Formulaire création
         public IActionResult Create()
         {
             ViewBag.Venues = new SelectList(_context.Venues, "VenueId", "Nom");
             return View();
         }
 
-        // Sauvegarder création
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Event ev)
@@ -60,7 +58,6 @@ namespace DemoMVCSQLite.Controllers
             return View(ev);
         }
 
-        // Formulaire modification
         public async Task<IActionResult> Edit(int id)
         {
             var ev = await _context.Events.FindAsync(id);
@@ -69,7 +66,6 @@ namespace DemoMVCSQLite.Controllers
             return View(ev);
         }
 
-        // Sauvegarder modification
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Event ev)
@@ -86,7 +82,6 @@ namespace DemoMVCSQLite.Controllers
             return View(ev);
         }
 
-        // Confirmation suppression
         public async Task<IActionResult> Delete(int id)
         {
             var ev = await _context.Events
@@ -96,7 +91,6 @@ namespace DemoMVCSQLite.Controllers
             return View(ev);
         }
 
-        // Supprimer
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -108,6 +102,101 @@ namespace DemoMVCSQLite.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        // Page import JSON clients
+        public async Task<IActionResult> ImportClients(int id)
+        {
+            var ev = await _context.Events
+                .Include(e => e.Venue)
+                .FirstOrDefaultAsync(e => e.EventId == id);
+
+            if (ev == null) return NotFound();
+            return View(ev);
+        }
+
+        // Traitement import JSON
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ImportClients(int id, string jsonData)
+        {
+            var ev = await _context.Events
+                .Include(e => e.Tickets)
+                .FirstOrDefaultAsync(e => e.EventId == id);
+
+            if (ev == null) return NotFound();
+
+            try
+            {
+                var clients = System.Text.Json.JsonSerializer.Deserialize<List<Client>>(jsonData);
+
+                if (clients == null || !clients.Any())
+                {
+                    TempData["Error"] = "Aucun client trouvé dans le JSON.";
+                    return RedirectToAction(nameof(ImportClients), new { id });
+                }
+
+                var ticket = ev.Tickets.FirstOrDefault();
+                int nouveaux = 0;
+                int dejaExistants = 0;
+                int dejaInscrits = 0;
+
+                foreach (var client in clients)
+                {
+                    // Vérification si le client existe déjà par email
+                    var existingClient = await _context.Clients
+                        .FirstOrDefaultAsync(c => c.Email == client.Email);
+
+                    if (existingClient == null)
+                    {
+                        _context.Clients.Add(client);
+                        await _context.SaveChangesAsync();
+                        existingClient = client;
+                        nouveaux++;
+                    }
+                    else
+                    {
+                        dejaExistants++;
+                    }
+
+                    // Vérification si le client est déjà inscrit à cette soirée
+                    if (ticket != null)
+                    {
+                        var dejaReserve = await _context.Reservations
+                            .AnyAsync(r => r.ClientId == existingClient.ClientId && r.TicketId == ticket.TicketId);
+
+                        if (!dejaReserve)
+                        {
+                            var reservation = new Reservation
+                            {
+                                ClientId = existingClient.ClientId,
+                                TicketId = ticket.TicketId,
+                                DateReservation = DateTime.Now,
+                                Statut = StatutReservation.Confirmee,
+                                QteTickets = 1,
+                                MontantTotal = ticket.Prix
+                            };
+                            _context.Reservations.Add(reservation);
+                        }
+                        else
+                        {
+                            dejaInscrits++;
+                        }
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+
+                TempData["Success"] = $"{nouveaux} nouveau(x) client(s) créé(s), " +
+                                      $"{dejaExistants} déjà existant(s), " +
+                                      $"{dejaInscrits} déjà inscrit(s) à cette soirée.";
+            }
+            catch
+            {
+                TempData["Error"] = "Format JSON invalide.";
+            }
+
+            return RedirectToAction(nameof(Details), new { id });
         }
     }
 }

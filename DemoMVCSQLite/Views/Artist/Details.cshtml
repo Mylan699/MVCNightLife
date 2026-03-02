@@ -1,0 +1,33 @@
+@model DemoMVCSQLite.Models.Artist
+
+@{
+    ViewData["Title"] = "Détails artiste";
+}
+
+<h1>🎧 @Model.Nom</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Style</dt>
+    <dd class="col-sm-9">@Model.Style</dd>
+
+    <dt class="col-sm-3">Biographie</dt>
+    <dd class="col-sm-9">@Model.Biographie</dd>
+</dl>
+
+<h3>🎉 Soirées</h3>
+@if (Model.EventArtists.Any())
+{
+    <ul>
+        @foreach (var ea in Model.EventArtists)
+        {
+            <li>@ea.Event.Titre — @ea.Event.Date.ToShortDateString() — Passage à @ea.HeurePassage.ToString("HH:mm")</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Aucune soirée programmée.</p>
+}
+
+<a asp-action="Edit" asp-route-id="@Model.ArtistId" class="btn btn-warning">Modifier</a>
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

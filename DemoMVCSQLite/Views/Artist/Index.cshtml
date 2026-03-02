@@ -1,0 +1,33 @@
+@model IEnumerable<DemoMVCSQLite.Models.Artist>
+
+@{
+    ViewData["Title"] = "Artistes";
+}
+
+<h1>🎧 Artistes</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Ajouter un artiste</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Style</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var artist in Model)
+        {
+            <tr>
+                <td>@artist.Nom</td>
+                <td>@artist.Style</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@artist.ArtistId" class="btn btn-info btn-sm">Détails</a>
+                    <a asp-action="Edit" asp-route-id="@artist.ArtistId" class="btn btn-warning btn-sm">Modifier</a>
+                    <a asp-action="Delete" asp-route-id="@artist.ArtistId" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

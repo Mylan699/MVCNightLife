@@ -1,0 +1,23 @@
+@model DemoMVCSQLite.Models.Client
+
+@{
+    ViewData["Title"] = "Supprimer un client";
+}
+
+<h1>🗑️ Supprimer un client</h1>
+
+<p class="text-danger">Êtes-vous sûr de vouloir supprimer <strong>@Model.Prenom @Model.Nom</strong> ?</p>
+
+<dl class="row">
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Téléphone</dt>
+    <dd class="col-sm-9">@Model.Telephone</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="ClientId" />
+    <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>
