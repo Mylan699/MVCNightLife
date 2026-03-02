@@ -1,0 +1,54 @@
+@model DemoMVCSQLite.Models.Ticket
+
+@{
+    ViewData["Title"] = "Détails billet";
+}
+
+<h1>🎟️ @Model.Type — @Model.Event?.Titre</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Soirée</dt>
+    <dd class="col-sm-9">@Model.Event?.Titre</dd>
+
+    <dt class="col-sm-3">Type</dt>
+    <dd class="col-sm-9">@Model.Type</dd>
+
+    <dt class="col-sm-3">Prix</dt>
+    <dd class="col-sm-9">@Model.Prix €</dd>
+
+    <dt class="col-sm-3">Disponibles</dt>
+    <dd class="col-sm-9">@Model.NombreDispo</dd>
+</dl>
+
+<h3>👥 Clients ayant ce billet</h3>
+@if (Model.Reservations.Any())
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model.Reservations)
+            {
+                <tr>
+                    <td>@r.Client.Nom</td>
+                    <td>@r.Client.Prenom</td>
+                    <td>@r.Client.Email</td>
+                    <td>@r.Statut</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Aucune réservation pour ce billet.</p>
+}
+
+<a asp-action="Edit" asp-route-id="@Model.TicketId" class="btn btn-warning">Modifier</a>
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

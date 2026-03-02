@@ -1,0 +1,37 @@
+@model IEnumerable<DemoMVCSQLite.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Billets";
+}
+
+<h1>🎟️ Billets</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Ajouter un billet</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Soirée</th>
+            <th>Type</th>
+            <th>Prix</th>
+            <th>Disponibles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model)
+        {
+            <tr>
+                <td>@ticket.Event?.Titre</td>
+                <td>@ticket.Type</td>
+                <td>@ticket.Prix €</td>
+                <td>@ticket.NombreDispo</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@ticket.TicketId" class="btn btn-info btn-sm">Détails</a>
+                    <a asp-action="Edit" asp-route-id="@ticket.TicketId" class="btn btn-warning btn-sm">Modifier</a>
+                    <a asp-action="Delete" asp-route-id="@ticket.TicketId" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

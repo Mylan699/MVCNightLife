@@ -1,0 +1,23 @@
+@model DemoMVCSQLite.Models.Ticket
+
+@{
+    ViewData["Title"] = "Supprimer un billet";
+}
+
+<h1>🗑️ Supprimer un billet</h1>
+
+<p class="text-danger">Êtes-vous sûr de vouloir supprimer le billet <strong>@Model.Type</strong> pour la soirée <strong>@Model.Event?.Titre</strong> ?</p>
+
+<dl class="row">
+    <dt class="col-sm-3">Prix</dt>
+    <dd class="col-sm-9">@Model.Prix €</dd>
+
+    <dt class="col-sm-3">Disponibles</dt>
+    <dd class="col-sm-9">@Model.NombreDispo</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="TicketId" />
+    <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>
