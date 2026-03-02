@@ -15,16 +15,27 @@ namespace DemoMVCSQLite.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pg = 1)
         {
+            int pageSize = 10;
+            var total = await _context.Events.CountAsync();
             var events = await _context.Events
                 .Include(e => e.Venue)
+                .Skip((pg - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
+
+            ViewBag.Page = pg;
+            ViewBag.TotalPages = (int)Math.Ceiling(total / (double)pageSize);
+            ViewBag.Total = total;
+
             return View(events);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, int pg = 1)
         {
+            int pageSize = 10;
+
             var ev = await _context.Events
                 .Include(e => e.Venue)
                 .Include(e => e.EventArtists)
@@ -35,6 +46,22 @@ namespace DemoMVCSQLite.Controllers
                 .FirstOrDefaultAsync(e => e.EventId == id);
 
             if (ev == null) return NotFound();
+
+            var reservations = ev.Tickets.SelectMany(t => t.Reservations).ToList();
+            int totalClients = reservations.Count;
+            int totalPages = (int)Math.Ceiling(totalClients / (double)pageSize);
+
+            var reservationsPaged = reservations
+                .Skip((pg - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            ViewBag.Page = pg;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalClients = totalClients;
+            ViewBag.Total = totalClients;
+            ViewBag.ReservationsPaged = reservationsPaged;
+
             return View(ev);
         }
 
@@ -104,7 +131,6 @@ namespace DemoMVCSQLite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Page import JSON clients
         public async Task<IActionResult> ImportClients(int id)
         {
             var ev = await _context.Events
@@ -115,7 +141,6 @@ namespace DemoMVCSQLite.Controllers
             return View(ev);
         }
 
-        // Traitement import JSON
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ImportClients(int id, string jsonData)
@@ -143,7 +168,6 @@ namespace DemoMVCSQLite.Controllers
 
                 foreach (var client in clients)
                 {
-                    // Vérification si le client existe déjà par email
                     var existingClient = await _context.Clients
                         .FirstOrDefaultAsync(c => c.Email == client.Email);
 
@@ -159,7 +183,6 @@ namespace DemoMVCSQLite.Controllers
                         dejaExistants++;
                     }
 
-                    // Vérification si le client est déjà inscrit à cette soirée
                     if (ticket != null)
                     {
                         var dejaReserve = await _context.Reservations

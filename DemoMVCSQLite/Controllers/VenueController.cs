@@ -14,14 +14,22 @@ namespace DemoMVCSQLite.Controllers
             _context = context;
         }
 
-        // Liste de tous les établissements
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pg = 1)
         {
-            var venues = await _context.Venues.ToListAsync();
+            int pageSize = 10;
+            var total = await _context.Venues.CountAsync();
+            var venues = await _context.Venues
+                .Skip((pg - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            ViewBag.Page = pg;
+            ViewBag.TotalPages = (int)Math.Ceiling(total / (double)pageSize);
+            ViewBag.Total = total;
+
             return View(venues);
         }
 
-        // Détail d'un établissement
         public async Task<IActionResult> Details(int id)
         {
             var venue = await _context.Venues
@@ -33,13 +41,11 @@ namespace DemoMVCSQLite.Controllers
             return View(venue);
         }
 
-        // Formulaire création
         public IActionResult Create()
         {
             return View();
         }
 
-        // Sauvegarder création
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Venue venue)
@@ -53,7 +59,6 @@ namespace DemoMVCSQLite.Controllers
             return View(venue);
         }
 
-        // Formulaire modification
         public async Task<IActionResult> Edit(int id)
         {
             var venue = await _context.Venues.FindAsync(id);
@@ -61,7 +66,6 @@ namespace DemoMVCSQLite.Controllers
             return View(venue);
         }
 
-        // Sauvegarder modification
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Venue venue)
@@ -77,7 +81,6 @@ namespace DemoMVCSQLite.Controllers
             return View(venue);
         }
 
-        // Confirmation suppression
         public async Task<IActionResult> Delete(int id)
         {
             var venue = await _context.Venues.FindAsync(id);
@@ -85,7 +88,6 @@ namespace DemoMVCSQLite.Controllers
             return View(venue);
         }
 
-        // Supprimer
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

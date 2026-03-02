@@ -15,11 +15,20 @@ namespace DemoMVCSQLite.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pg = 1)
         {
+            int pageSize = 10;
+            var total = await _context.Tickets.CountAsync();
             var tickets = await _context.Tickets
                 .Include(t => t.Event)
+                .Skip((pg - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
+
+            ViewBag.Page = pg;
+            ViewBag.TotalPages = (int)Math.Ceiling(total / (double)pageSize);
+            ViewBag.Total = total;
+
             return View(tickets);
         }
 

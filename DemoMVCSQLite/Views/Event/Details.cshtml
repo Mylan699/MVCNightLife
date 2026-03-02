@@ -11,6 +11,11 @@
     <div class="alert alert-success">@TempData["Success"]</div>
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
 <dl class="row">
     <dt class="col-sm-3">Date</dt>
     <dd class="col-sm-9">@Model.Date.ToString("dd/MM/yyyy HH:mm")</dd>
@@ -74,14 +79,14 @@ else
     <p>Aucun billet disponible.</p>
 }
 
-<h3>👥 Clients inscrits</h3>
+<h3>👥 Clients inscrits (@ViewBag.TotalClients)</h3>
 <a asp-action="ImportClients" asp-route-id="@Model.EventId" class="btn btn-success btn-sm mb-3">📥 Importer des clients (JSON)</a>
 
 @{
-    var reservations = Model.Tickets.SelectMany(t => t.Reservations).ToList();
+    var reservationsPaged = ViewBag.ReservationsPaged as List<DemoMVCSQLite.Models.Reservation>;
 }
 
-@if (reservations.Any())
+@if (reservationsPaged != null && reservationsPaged.Any())
 {
     <table class="table table-sm">
         <thead>
@@ -94,7 +99,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var r in reservations)
+            @foreach (var r in reservationsPaged)
             {
                 <tr>
                     <td>@r.Client.Nom</td>
@@ -106,6 +111,25 @@ else
             }
         </tbody>
     </table>
+
+    <nav>
+        <ul class="pagination">
+            <li class="page-item @(ViewBag.Page == 1 ? "disabled" : "")">
+                <a class="page-link" href="/Event/Details/@Model.EventId?pg=@(ViewBag.Page - 1)">Précédent</a>
+            </li>
+
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(ViewBag.Page == i ? "active" : "")">
+                    <a class="page-link" href="/Event/Details/@Model.EventId?pg=@i">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(ViewBag.Page == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="/Event/Details/@Model.EventId?pg=@(ViewBag.Page + 1)">Suivant</a>
+            </li>
+        </ul>
+    </nav>
 }
 else
 {
