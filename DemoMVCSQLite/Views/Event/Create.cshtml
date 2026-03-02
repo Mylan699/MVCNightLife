@@ -1,0 +1,54 @@
+@model DemoMVCSQLite.Models.Event
+
+@{
+    ViewData["Title"] = "Ajouter une soirée";
+}
+
+<h1>🎉 Ajouter une soirée</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Titre" class="form-label"></label>
+        <input asp-for="Titre" class="form-control" />
+        <span asp-validation-for="Titre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Date" class="form-label"></label>
+        <input asp-for="Date" class="form-control" type="datetime-local" />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ThemeMusical" class="form-label"></label>
+        <input asp-for="ThemeMusical" class="form-control" />
+        <span asp-validation-for="ThemeMusical" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PrixEntree" class="form-label"></label>
+        <input asp-for="PrixEntree" class="form-control" />
+        <span asp-validation-for="PrixEntree" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CapaciteMax" class="form-label"></label>
+        <input asp-for="CapaciteMax" class="form-control" />
+        <span asp-validation-for="CapaciteMax" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Statut" class="form-label"></label>
+        <select asp-for="Statut" class="form-control" asp-items="Html.GetEnumSelectList<DemoMVCSQLite.Models.StatutEvent>()"></select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="VenueId" class="form-label">Établissement</label>
+        <select asp-for="VenueId" class="form-control" asp-items="ViewBag.Venues"></select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>

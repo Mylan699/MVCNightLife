@@ -3,9 +3,9 @@ using DemoMVCSQLite.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Ajout du DbContext avec SQLite
+// Ajout du DbContext avec SQLite via appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=nightlife.db"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

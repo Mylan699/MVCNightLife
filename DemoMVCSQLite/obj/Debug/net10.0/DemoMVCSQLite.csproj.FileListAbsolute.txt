@@ -212,3 +212,4 @@ C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\DemoMVCSQLite\obj\Deb
 C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\DemoMVCSQLite\obj\Debug\net10.0\DemoMVCSQLite.pdb
 C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\DemoMVCSQLite\obj\Debug\net10.0\DemoMVCSQLite.genruntimeconfig.cache
 C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\DemoMVCSQLite\obj\Debug\net10.0\ref\DemoMVCSQLite.dll
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\DemoMVCSQLite\obj\Debug\net10.0\DemoMVCSQLite.sourcelink.json

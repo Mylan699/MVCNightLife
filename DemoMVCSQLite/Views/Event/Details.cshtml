@@ -1,0 +1,73 @@
+@model DemoMVCSQLite.Models.Event
+
+@{
+    ViewData["Title"] = "Détails soirée";
+}
+
+<h1>🎉 @Model.Titre</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Date</dt>
+    <dd class="col-sm-9">@Model.Date.ToString("dd/MM/yyyy HH:mm")</dd>
+
+    <dt class="col-sm-3">Établissement</dt>
+    <dd class="col-sm-9">@Model.Venue?.Nom</dd>
+
+    <dt class="col-sm-3">Thème Musical</dt>
+    <dd class="col-sm-9">@Model.ThemeMusical</dd>
+
+    <dt class="col-sm-3">Prix Entrée</dt>
+    <dd class="col-sm-9">@Model.PrixEntree €</dd>
+
+    <dt class="col-sm-3">Capacité Max</dt>
+    <dd class="col-sm-9">@Model.CapaciteMax personnes</dd>
+
+    <dt class="col-sm-3">Statut</dt>
+    <dd class="col-sm-9">@Model.Statut</dd>
+</dl>
+
+<h3>🎧 Artistes</h3>
+@if (Model.EventArtists.Any())
+{
+    <ul>
+        @foreach (var ea in Model.EventArtists)
+        {
+            <li>@ea.Artist.Nom — @ea.HeurePassage.ToString("HH:mm")</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Aucun artiste programmé.</p>
+}
+
+<h3>🎟️ Billets disponibles</h3>
+@if (Model.Tickets.Any())
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Prix</th>
+                <th>Disponibles</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model.Tickets)
+            {
+                <tr>
+                    <td>@t.Type</td>
+                    <td>@t.Prix €</td>
+                    <td>@t.NombreDispo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Aucun billet disponible.</p>
+}
+
+<a asp-action="Edit" asp-route-id="@Model.EventId" class="btn btn-warning">Modifier</a>
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

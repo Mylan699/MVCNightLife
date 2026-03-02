@@ -1,0 +1,41 @@
+@model IEnumerable<DemoMVCSQLite.Models.Event>
+
+@{
+    ViewData["Title"] = "Soirées";
+}
+
+<h1>🎉 Soirées</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Ajouter une soirée</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Date</th>
+            <th>Établissement</th>
+            <th>Thème Musical</th>
+            <th>Prix Entrée</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ev in Model)
+        {
+            <tr>
+                <td>@ev.Titre</td>
+                <td>@ev.Date.ToShortDateString()</td>
+                <td>@ev.Venue?.Nom</td>
+                <td>@ev.ThemeMusical</td>
+                <td>@ev.PrixEntree €</td>
+                <td>@ev.Statut</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@ev.EventId" class="btn btn-info btn-sm">Détails</a>
+                    <a asp-action="Edit" asp-route-id="@ev.EventId" class="btn btn-warning btn-sm">Modifier</a>
+                    <a asp-action="Delete" asp-route-id="@ev.EventId" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

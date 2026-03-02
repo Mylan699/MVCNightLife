@@ -1,8 +1,76 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Accueil";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mt-5">
+    <h1>🎶 NightLife Lyon</h1>
+    <p class="lead">Gestion de soirées & billetterie</p>
+</div>
+
+<div class="row mt-5 text-center">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow">
+            <div class="card-body">
+                <h2>🏛️</h2>
+                <h5 class="card-title">Établissements</h5>
+                <p class="card-text">Gérer les clubs et salles de Lyon</p>
+                <a asp-controller="Venue" asp-action="Index" class="btn btn-primary">Accéder</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow">
+            <div class="card-body">
+                <h2>🎉</h2>
+                <h5 class="card-title">Soirées</h5>
+                <p class="card-text">Gérer les événements et soirées</p>
+                <a asp-controller="Event" asp-action="Index" class="btn btn-primary">Accéder</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow">
+            <div class="card-body">
+                <h2>🎧</h2>
+                <h5 class="card-title">Artistes</h5>
+                <p class="card-text">Gérer les DJs et artistes</p>
+                <a asp-controller="Artist" asp-action="Index" class="btn btn-primary">Accéder</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow">
+            <div class="card-body">
+                <h2>👥</h2>
+                <h5 class="card-title">Clients</h5>
+                <p class="card-text">Gérer les clients</p>
+                <a asp-controller="Client" asp-action="Index" class="btn btn-primary">Accéder</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow">
+            <div class="card-body">
+                <h2>🎟️</h2>
+                <h5 class="card-title">Billets</h5>
+                <p class="card-text">Gérer les types de billets</p>
+                <a asp-controller="Ticket" asp-action="Index" class="btn btn-primary">Accéder</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow">
+            <div class="card-body">
+                <h2>📋</h2>
+                <h5 class="card-title">Réservations</h5>
+                <p class="card-text">Gérer les réservations</p>
+                <a asp-controller="Reservation" asp-action="Index" class="btn btn-primary">Accéder</a>
+            </div>
+        </div>
+    </div>
 </div>

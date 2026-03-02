@@ -1,0 +1,23 @@
+@model DemoMVCSQLite.Models.Event
+
+@{
+    ViewData["Title"] = "Supprimer une soirée";
+}
+
+<h1>🗑️ Supprimer une soirée</h1>
+
+<p class="text-danger">Êtes-vous sûr de vouloir supprimer <strong>@Model.Titre</strong> ?</p>
+
+<dl class="row">
+    <dt class="col-sm-3">Date</dt>
+    <dd class="col-sm-9">@Model.Date.ToShortDateString()</dd>
+
+    <dt class="col-sm-3">Établissement</dt>
+    <dd class="col-sm-9">@Model.Venue?.Nom</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="EventId" />
+    <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>

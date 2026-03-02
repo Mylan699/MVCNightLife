@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
 namespace DemoMVCSQLite.Models
 {
     public enum StatutEvent { Planifie, EnCours, Termine, Annule }
@@ -12,13 +14,16 @@ namespace DemoMVCSQLite.Models
         public int CapaciteMax { get; set; }
         public StatutEvent Statut { get; set; } = StatutEvent.Planifie;
 
-        // Clé étrangère
         public int VenueId { get; set; }
 
         // Navigation
+        [ValidateNever]
         public Venue Venue { get; set; } = null!;
+        [ValidateNever]
         public ICollection<EventArtist> EventArtists { get; set; } = new List<EventArtist>();
+        [ValidateNever]
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+        [ValidateNever]
         public ICollection<ReservationTable> ReservationsTables { get; set; } = new List<ReservationTable>();
     }
 }
