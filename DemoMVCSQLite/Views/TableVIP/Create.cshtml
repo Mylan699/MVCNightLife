@@ -1,0 +1,38 @@
+@model DemoMVCSQLite.Models.TableVIP
+
+@{
+    ViewData["Title"] = "Ajouter une table VIP";
+}
+
+<h1>🪑 Ajouter une table VIP</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Numero" class="form-label"></label>
+        <input asp-for="Numero" class="form-control" placeholder="Ex: T1, T2..." />
+        <span asp-validation-for="Numero" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NombrePlaces" class="form-label"></label>
+        <input asp-for="NombrePlaces" class="form-control" />
+        <span asp-validation-for="NombrePlaces" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Prix" class="form-label"></label>
+        <input asp-for="Prix" class="form-control" />
+        <span asp-validation-for="Prix" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="VenueId" class="form-label">Établissement</label>
+        <select asp-for="VenueId" class="form-control" asp-items="ViewBag.Venues"></select>
+        <span asp-validation-for="VenueId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>

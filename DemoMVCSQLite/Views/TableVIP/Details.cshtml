@@ -1,0 +1,51 @@
+@model DemoMVCSQLite.Models.TableVIP
+
+@{
+    ViewData["Title"] = "Détails table VIP";
+}
+
+<h1>🪑 Table @Model.Numero</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Établissement</dt>
+    <dd class="col-sm-9">@Model.Venue?.Nom</dd>
+
+    <dt class="col-sm-3">Nombre de places</dt>
+    <dd class="col-sm-9">@Model.NombrePlaces</dd>
+
+    <dt class="col-sm-3">Prix</dt>
+    <dd class="col-sm-9">@Model.Prix €</dd>
+</dl>
+
+<h3>📋 Réservations</h3>
+@if (Model.ReservationsTables.Any())
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Soirée</th>
+                <th>Date</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rt in Model.ReservationsTables)
+            {
+                <tr>
+                    <td>@rt.Client.Prenom @rt.Client.Nom</td>
+                    <td>@rt.Event.Titre</td>
+                    <td>@rt.DateReservation.ToShortDateString()</td>
+                    <td>@rt.Statut</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Aucune réservation pour cette table.</p>
+}
+
+<a asp-action="Edit" asp-route-id="@Model.TableVIPId" class="btn btn-warning">Modifier</a>
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

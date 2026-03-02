@@ -1,0 +1,26 @@
+@model DemoMVCSQLite.Models.ReservationTable
+
+@{
+    ViewData["Title"] = "Supprimer une réservation table VIP";
+}
+
+<h1>🗑️ Supprimer une réservation table VIP</h1>
+
+<p class="text-danger">Êtes-vous sûr de vouloir supprimer la réservation de <strong>@Model.Client.Prenom @Model.Client.Nom</strong> pour la table <strong>@Model.TableVIP.Numero</strong> lors de la soirée <strong>@Model.Event.Titre</strong> ?</p>
+
+<dl class="row">
+    <dt class="col-sm-3">Établissement</dt>
+    <dd class="col-sm-9">@Model.TableVIP.Venue.Nom</dd>
+
+    <dt class="col-sm-3">Date réservation</dt>
+    <dd class="col-sm-9">@Model.DateReservation.ToShortDateString()</dd>
+
+    <dt class="col-sm-3">Statut</dt>
+    <dd class="col-sm-9">@Model.Statut</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="ReservationTableId" />
+    <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>

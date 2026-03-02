@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
 namespace DemoMVCSQLite.Models
 {
     public enum StatutReservation { EnAttente, Confirmee, Annulee }
@@ -10,12 +12,13 @@ namespace DemoMVCSQLite.Models
         public int QteTickets { get; set; }
         public decimal MontantTotal { get; set; }
 
-        // Clés étrangères
         public int ClientId { get; set; }
         public int TicketId { get; set; }
 
         // Navigation
+        [ValidateNever]
         public Client Client { get; set; } = null!;
+        [ValidateNever]
         public Ticket Ticket { get; set; } = null!;
     }
 }

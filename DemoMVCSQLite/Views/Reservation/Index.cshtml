@@ -1,0 +1,45 @@
+@model IEnumerable<DemoMVCSQLite.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Réservations";
+}
+
+<h1>📋 Réservations</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Ajouter une réservation</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Soirée</th>
+            <th>Type billet</th>
+            <th>Quantité</th>
+            <th>Montant</th>
+            <th>Statut</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Client.Prenom @r.Client.Nom</td>
+                <td>@r.Ticket.Event.Titre</td>
+                <td>@r.Ticket.Type</td>
+                <td>@r.QteTickets</td>
+                <td>@r.MontantTotal €</td>
+                <td>@r.Statut</td>
+                <td>@r.DateReservation.ToShortDateString()</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@r.ReservationId" class="btn btn-info btn-sm">Détails</a>
+                    <a asp-action="Edit" asp-route-id="@r.ReservationId" class="btn btn-warning btn-sm">Modifier</a>
+                    <a asp-action="Delete" asp-route-id="@r.ReservationId" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@await Html.PartialAsync("_Pagination")

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DemoMVCSQLite")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c54a9733d2b1933047ff40b4abaf1435e4a9c77f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73bef640a6eb8505dfb5794b278ee57f76b62b39")]
 [assembly: System.Reflection.AssemblyProductAttribute("DemoMVCSQLite")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DemoMVCSQLite")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

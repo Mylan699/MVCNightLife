@@ -1,0 +1,39 @@
+@model IEnumerable<DemoMVCSQLite.Models.TableVIP>
+
+@{
+    ViewData["Title"] = "Tables VIP";
+}
+
+<h1>🪑 Tables VIP</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Ajouter une table VIP</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Numéro</th>
+            <th>Établissement</th>
+            <th>Nombre de places</th>
+            <th>Prix</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var table in Model)
+        {
+            <tr>
+                <td>@table.Numero</td>
+                <td>@table.Venue?.Nom</td>
+                <td>@table.NombrePlaces</td>
+                <td>@table.Prix €</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@table.TableVIPId" class="btn btn-info btn-sm">Détails</a>
+                    <a asp-action="Edit" asp-route-id="@table.TableVIPId" class="btn btn-warning btn-sm">Modifier</a>
+                    <a asp-action="Delete" asp-route-id="@table.TableVIPId" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@await Html.PartialAsync("_Pagination")

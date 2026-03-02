@@ -1,0 +1,23 @@
+@model DemoMVCSQLite.Models.TableVIP
+
+@{
+    ViewData["Title"] = "Supprimer une table VIP";
+}
+
+<h1>🗑️ Supprimer une table VIP</h1>
+
+<p class="text-danger">Êtes-vous sûr de vouloir supprimer la table <strong>@Model.Numero</strong> de <strong>@Model.Venue?.Nom</strong> ?</p>
+
+<dl class="row">
+    <dt class="col-sm-3">Nombre de places</dt>
+    <dd class="col-sm-9">@Model.NombrePlaces</dd>
+
+    <dt class="col-sm-3">Prix</dt>
+    <dd class="col-sm-9">@Model.Prix €</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="TableVIPId" />
+    <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>

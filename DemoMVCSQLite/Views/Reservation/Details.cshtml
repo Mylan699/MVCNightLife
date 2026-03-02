@@ -1,0 +1,36 @@
+@model DemoMVCSQLite.Models.Reservation
+
+@{
+    ViewData["Title"] = "Détails réservation";
+}
+
+<h1>📋 Réservation #@Model.ReservationId</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Client</dt>
+    <dd class="col-sm-9">@Model.Client.Prenom @Model.Client.Nom</dd>
+
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Client.Email</dd>
+
+    <dt class="col-sm-3">Soirée</dt>
+    <dd class="col-sm-9">@Model.Ticket.Event.Titre</dd>
+
+    <dt class="col-sm-3">Type billet</dt>
+    <dd class="col-sm-9">@Model.Ticket.Type</dd>
+
+    <dt class="col-sm-3">Quantité</dt>
+    <dd class="col-sm-9">@Model.QteTickets</dd>
+
+    <dt class="col-sm-3">Montant total</dt>
+    <dd class="col-sm-9">@Model.MontantTotal €</dd>
+
+    <dt class="col-sm-3">Statut</dt>
+    <dd class="col-sm-9">@Model.Statut</dd>
+
+    <dt class="col-sm-3">Date réservation</dt>
+    <dd class="col-sm-9">@Model.DateReservation.ToString("dd/MM/yyyy HH:mm")</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.ReservationId" class="btn btn-warning">Modifier</a>
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
 namespace DemoMVCSQLite.Models
 {
     public class ReservationTable
@@ -12,8 +14,11 @@ namespace DemoMVCSQLite.Models
         public int EventId { get; set; }
 
         // Navigation
+        [ValidateNever]
         public Client Client { get; set; } = null!;
+        [ValidateNever]
         public TableVIP TableVIP { get; set; } = null!;
+        [ValidateNever]
         public Event Event { get; set; } = null!;
     }
 }
