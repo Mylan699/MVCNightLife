@@ -1,0 +1,35 @@
+@model IEnumerable<DemoMVCSQLite.Models.Venue>
+
+@{
+    ViewData["Title"] = "Établissements";
+}
+
+<h1>🏛️ Établissements</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Ajouter un établissement</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Capacité</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var venue in Model)
+        {
+            <tr>
+                <td>@venue.Nom</td>
+                <td>@venue.Adresse</td>
+                <td>@venue.Capacite</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@venue.VenueId" class="btn btn-info btn-sm">Détails</a>
+                    <a asp-action="Edit" asp-route-id="@venue.VenueId" class="btn btn-warning btn-sm">Modifier</a>
+                    <a asp-action="Delete" asp-route-id="@venue.VenueId" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

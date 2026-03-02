@@ -1,0 +1,51 @@
+@model DemoMVCSQLite.Models.Venue
+
+@{
+    ViewData["Title"] = "Détails établissement";
+}
+
+<h1>🏛️ @Model.Nom</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Adresse</dt>
+    <dd class="col-sm-9">@Model.Adresse</dd>
+
+    <dt class="col-sm-3">Capacité</dt>
+    <dd class="col-sm-9">@Model.Capacite personnes</dd>
+
+    <dt class="col-sm-3">Description</dt>
+    <dd class="col-sm-9">@Model.Description</dd>
+</dl>
+
+<h3>🎉 Soirées associées</h3>
+@if (Model.Events.Any())
+{
+    <ul>
+        @foreach (var e in Model.Events)
+        {
+            <li>@e.Titre — @e.Date.ToShortDateString()</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Aucune soirée pour le moment.</p>
+}
+
+<h3>🪑 Tables VIP</h3>
+@if (Model.TablesVIP.Any())
+{
+    <ul>
+        @foreach (var t in Model.TablesVIP)
+        {
+            <li>Table @t.Numero — @t.NombrePlaces places — @t.Prix €</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Aucune table VIP pour le moment.</p>
+}
+
+<a asp-action="Edit" asp-route-id="@Model.VenueId" class="btn btn-warning">Modifier</a>
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

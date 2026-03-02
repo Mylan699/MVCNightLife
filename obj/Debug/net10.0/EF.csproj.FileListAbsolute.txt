@@ -1,0 +1,14 @@
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\bin\Debug\net10.0\EF.exe
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\bin\Debug\net10.0\EF.deps.json
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\bin\Debug\net10.0\EF.runtimeconfig.json
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\bin\Debug\net10.0\EF.dll
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\bin\Debug\net10.0\EF.pdb
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\obj\Debug\net10.0\EF.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\obj\Debug\net10.0\EF.AssemblyInfoInputs.cache
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\obj\Debug\net10.0\EF.AssemblyInfo.cs
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\obj\Debug\net10.0\EF.csproj.CoreCompileInputs.cache
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\obj\Debug\net10.0\EF.dll
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\obj\Debug\net10.0\refint\EF.dll
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\obj\Debug\net10.0\EF.pdb
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\obj\Debug\net10.0\EF.genruntimeconfig.cache
+C:\Users\mmahieddine\Documents\Cours\5e année\EF cours\EF\obj\Debug\net10.0\ref\EF.dll

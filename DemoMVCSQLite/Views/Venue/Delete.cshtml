@@ -1,0 +1,23 @@
+@model DemoMVCSQLite.Models.Venue
+
+@{
+    ViewData["Title"] = "Supprimer un établissement";
+}
+
+<h1>🗑️ Supprimer un établissement</h1>
+
+<p class="text-danger">Êtes-vous sûr de vouloir supprimer <strong>@Model.Nom</strong> ?</p>
+
+<dl class="row">
+    <dt class="col-sm-3">Adresse</dt>
+    <dd class="col-sm-9">@Model.Adresse</dd>
+
+    <dt class="col-sm-3">Capacité</dt>
+    <dd class="col-sm-9">@Model.Capacite personnes</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="VenueId" />
+    <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>
